@@ -5,12 +5,15 @@ import { Link } from 'react-router-dom';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import {BsInfoCircle} from 'react-icons/bs'
 import {MdOutlineAddBox, MdOutlineDelete} from 'react-icons/md'
-
+import BooksTable from '../components/home/BooksTable'
+import BooksCard from '../components/home/BooksCard';
 
 const Home = () => {
 
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true); 
+  const [showType, setShowType] = useState('table');
+
   // useEffect(() => {
   //    setLoading(true);
   //     axios
@@ -41,6 +44,20 @@ const Home = () => {
 }, []);
   return (
     <div className='p-4'>
+      <div className='flex justify-center items-center gap-x-4'>
+         <button className='bg-sky-300 hover:bg-sky-600 px-4 py-1 rounded-lg '
+           onClick={() => setShowType('table')}
+         >
+         table
+         </button>
+      </div>
+      <div className='flex justify-center items-center gap-x-4'>
+         <button className='bg-sky-300 hover:bg-sky-600 px-4 py-1 rounded-lg '
+           onClick={() => setShowType('card')}
+         >
+         Card
+         </button>
+      </div>
       <div className='flex justify-between items-center'>
         <h1 className='text-3xl my-8'>Book List</h1>
         <Link to='/books/create'>
@@ -49,7 +66,7 @@ const Home = () => {
         </div>  
         {loading  ? (
           <Spinner />
-        ) : (
+        ) : showType === 'table' ?( <BooksTable books={books}/> ) : (<BooksCard /> books={books}) (
         <table className='w-full border-separate border-spacing-2'>
             <thead>
               <tr>
